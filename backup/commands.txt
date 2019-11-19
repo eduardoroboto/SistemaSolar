@@ -1,0 +1,46 @@
+  triangulo = Triangle((0,0,0),(4,0,0),(2,4,0))
+    quadrado = Square(0,0,10)
+    retangulo = Rectangle(0,0,3,6)
+    circulo = Circle(5,5,5,20)
+    cubo = Cube(0,0,0,5)
+    ponto = Vertex(2,2)
+    esfera = Sphere(5,5,0,5,20)
+    giza = Pyramid(0,0,0,15,20)
+
+
+        # triangulo.draw() #Ok
+        #triangulo.reflection() #OK
+        #triangulo.translation(1,0,0) #OK
+        #triangulo.rotation(1,'y') #OK
+        #triangulo.scale(1.1,1.1,1.1) #OK
+        #quadrado.draw() # OK
+        #quadrado.reflection(1) #OK
+        #quadrado.rotation(1,'y') #Ok
+        #quadrado.translation(1,0) #OK
+        #retangulo.draw() #OK
+        #retangulo.rotation(1,'z') #Ok
+        #retangulo.reflection(2) #OK
+        #circulo.draw() #OK
+        #circulo.reflection() #OK
+        #circulo.rotation(1,'z') #OK
+        #circulo.translation(1,0) #OK
+        #cubo.draw() #OK
+        #cubo.reflection(1) #NOT OK
+        #cubo.translation(1,0,0) #OK
+        #cubo.rotation(1,'z') #OK
+        #esfera.draw() #OK
+        #esfera.reflection(2)   #OK
+        #esfera.rotation(1,'y')  #OK
+        #esfera.translation(0,0,0) #OK
+
+        #giza.draw() #OK
+        #giza.reflection() #NOT OK
+        #giza.rotation(1,'y') #NOT OK
+        #giza.translation(1,0,0) #NOT OK
+
+
+        linex.draw()
+        liney.draw()
+        linez.draw()
+
+
