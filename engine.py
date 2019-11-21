@@ -99,7 +99,7 @@ neptune.revolution_generate(sun.x,sun.y,DISTANCE_MAP(NEPTUNE_DISTANCE)+sun.radiu
 if __name__ == "__main__":
 
     while True:
-        ENGINE.user_input("zoom")
+        ENGINE.user_input()
         ENGINE.clear_buffer()
         arrows.draw()
         sun.draw()
