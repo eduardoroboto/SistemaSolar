@@ -8,6 +8,7 @@ from matrix import Matrix
 # Result := ((Input - InputLow) / (InputHigh - InputLow)) \
 #          * (OutputHigh - OutputLow) + OutputLow;
 def MAP(input, inputLow,inputHigh, outputLow ,outputHigh):
+    """A simple function that take any number and scale it to a new number."""
     result = ((input - inputLow) / (inputHigh - inputLow)) * (outputHigh - outputLow) + outputLow
 
     return result
@@ -15,28 +16,42 @@ def MAP(input, inputLow,inputHigh, outputLow ,outputHigh):
 
 
 class Vertex():
+    """A simple Class used to help on the logic of a Vertex on a OpenGL project"""
 
     def __init__(self, x, y,z=0):
+        """Parameters
+        ----------
+        x : int
+            Position on x axis
+        y : int
+            Position on y axis
+        z : int, optional
+            Position on z axis
+
+        """
+
         self.x = x
         self.y = y
         self.z = z
        
 
     def get_point(self):
+        """Function that convert x,y,z to a list"""
+
         return [self.x, self.y, self.z]
 
 
     def draw(self):
+        """A draw Function that uses OpenGL to draw the Vertex"""
+
         glBegin(GL_POINTS)
         glColor((1, 1, 1))
         glVertex3fv(self.get_point())
         glEnd()
 
-    def get_point(self):
-        return [self.x, self.y,self.z]
-
-
     def __to_matrix(self,type):
+        """A Function that  convert the Vertex to a Matrix"""
+
         if type == 1:
             return  Matrix(4,1,[self.x,self.y,self.z,1])
         if type == 2:
@@ -48,17 +63,22 @@ class Vertex():
 
 
     def __from_matrix(self, matriz):
+        """A Function that  convert the a Matrix to Vertex"""
+
         self.x = matriz[1, 1]
         self.y = matriz[2, 1]
         self.z = matriz[3, 1]
 
     def update(self,x,y,z):
+        """A Function that updates the parameters x,y,x """
+
         self.x = x
         self.y = y
         self.z = z
 
 
     def translation(self,dx,dy,dz=None):
+        """A Function that makes the translation of the Vertex"""
         vertexMatrix = self.__to_matrix(1)
 
         if dz is not None:
@@ -70,35 +90,28 @@ class Vertex():
 
         return self.__from_matrix(result)
 
-# MAP(input, inputLow,inputHigh, outputLow ,outputHigh)
 
     def rotation(self,angle,axis='z'):
-        if self.z == "kkkk":
-            angle = radians(angle)
-            vertexMatrix = self.__to_matrix(2)
-            matrixRotation2d = Matrix(2,2,[cos(angle),-sin(angle),sin(angle),cos(angle)])
-            result =  matrixRotation2d.dot(vertexMatrix)
-            ok = result.return_list_cols(1)
-            self.update(ok[0], ok[1],0)
-        else:
-            angle = radians(angle)
-            vertexMatrix = self.__to_matrix(3)
-            matrixRotation3dX = Matrix(3,3,[1,0,0,0,cos(angle),-sin(angle),0,sin(angle),cos(angle)])
-            matrixRotation3dY = Matrix(3,3,[cos(angle),0,sin(angle),0,1,0,-sin(angle),0,cos(angle)])
-            matrixRotation3dZ = Matrix(3,3,[cos(angle),-sin(angle),0,sin(angle),cos(angle),0,0,0,1])
+        """A Function that makes the rotation of the Vertex based on angle and axis"""
 
-            if axis == 'z':
-                result = matrixRotation3dZ.dot(vertexMatrix)
-                ok = result.return_list_cols(1)
-                self.update(ok[0], ok[1], ok[2])
-            elif axis == 'x':
-                result = matrixRotation3dX.dot(vertexMatrix)
-                ok = result.return_list_cols(1)
-                self.update(ok[0], ok[1], ok[2])
-            elif axis == 'y':
-                result = matrixRotation3dY.dot(vertexMatrix)
-                ok = result.return_list_cols(1)
-                self.update(ok[0], ok[1], ok[2])
+        angle = radians(angle)
+        vertexMatrix = self.__to_matrix(3)
+        matrixRotation3dX = Matrix(3,3,[1,0,0,0,cos(angle),-sin(angle),0,sin(angle),cos(angle)])
+        matrixRotation3dY = Matrix(3,3,[cos(angle),0,sin(angle),0,1,0,-sin(angle),0,cos(angle)])
+        matrixRotation3dZ = Matrix(3,3,[cos(angle),-sin(angle),0,sin(angle),cos(angle),0,0,0,1])
+
+        if axis == 'z':
+            result = matrixRotation3dZ.dot(vertexMatrix)
+            ok = result.return_list_cols(1)
+            self.update(ok[0], ok[1], ok[2])
+        elif axis == 'x':
+            result = matrixRotation3dX.dot(vertexMatrix)
+            ok = result.return_list_cols(1)
+            self.update(ok[0], ok[1], ok[2])
+        elif axis == 'y':
+            result = matrixRotation3dY.dot(vertexMatrix)
+            ok = result.return_list_cols(1)
+            self.update(ok[0], ok[1], ok[2])
 
 
 
@@ -107,6 +120,8 @@ class Vertex():
 
 
     def scale(self, dx, dy, dz=None):
+        """A Function that makes the scale of the Vertex based on a new x,y,z"""
+
 
         if dz is not None:
             vertexMatrix = Matrix(1, 3,[self.x, self.y, self.z])
@@ -123,6 +138,8 @@ class Vertex():
             self.update(ok[0],ok[1],0)
 
     def reflection(self,type):
+        """A Function that makes the reflection of the Vertex with two types"""
+
         if type==1:
             vetexMatrix = self.__to_matrix(3)
 
@@ -140,12 +157,24 @@ class Vertex():
 
 
     def projection(self):
+        """A Function that makes the projection of the Vertex"""
+        # TODO Fazer essa função projection no futuro para ficar legal no github.
+
         pass
 
     def shear(self,angle):
+        """A Function that makes the shear of the Vertex"""
+        # TODO Fazer essa função shear no futuro para ficar legal no github.
+
+
         pass
 
 class Shape():
+
+    """A simple Class used to help on using the Vertex functions of linear transformations
+    on each Vertex of a Shape.
+     """
+
 
     def translation(self, dx, dy, dz=None):
         for vertex in self.vertices:
@@ -172,13 +201,18 @@ class Shape():
 
 
     def projection(self):
+        # TODO Fazer essa função projection no futuro para ficar legal no github.
+
         pass
 
     def shear(self, angle):
+        # TODO Fazer essa função shear no futuro para ficar legal no github.
+
         pass
 
 
 class Line(Shape):
+    """ Class for the Line Shape """
     def __init__(self, x1, y1, z1, x2, y2,z2,color=(1,1,1)):
         self.line = [Vertex(x1, y1,z1), Vertex(x2, y2,z2)]
         self.color = color
@@ -202,6 +236,7 @@ class Line(Shape):
 
 
 class Triangle(Shape):
+    """ Class for the Triangle Shape """
 
     def __init__(self, a, b, c):
         self.vertices = self.__create_edges(a, b, c)
@@ -238,6 +273,8 @@ class Triangle(Shape):
 
 
 class Square(Shape):
+    """ Class for the Square Shape """
+
     def __init__(self, x, y, width):
         self.x = x
         self.y = y
@@ -283,6 +320,8 @@ class Square(Shape):
 
 
 class Rectangle(Shape):
+    """ Class for the Rectangle Shape """
+
 
     def __init__(self, x, y, width, height):
         self.x = x
@@ -328,8 +367,9 @@ class Rectangle(Shape):
             glEnd()
 
 
-
 class Circle(Shape):
+    """ Class for the Circle Shape """
+
 
     def __init__(self, x, y, radius, number):
         self.x = x
@@ -380,6 +420,8 @@ class Circle(Shape):
 
 
 class Cube(Shape):
+    """ Class for the Cube Shape """
+
     def __init__(self,x,y,z,width):
         self.x = x
         self.y = y
@@ -522,6 +564,8 @@ class Cube(Shape):
             glEnd()
 
 class Cuboid(Shape):
+    """ Class for the Cuboid Shape """
+
     def __init__(self,x,y,z,width, height):
         self.x = x
         self.y = y
@@ -563,6 +607,8 @@ class Cuboid(Shape):
 
 
 class Sphere(Shape):
+    """ Class for the Sphere Shape """
+
     def __init__(self,x,y,z,radius,total):
         self.x = x
         self.y = y
@@ -572,6 +618,8 @@ class Sphere(Shape):
         self.halfPI = pi / 2
 
         self.vertices = self.__creat_vertices(self.x,self.y,self.z)
+
+
 
 
     def __creat_vertices(self,x,y,z):
@@ -651,7 +699,17 @@ class Sphere(Shape):
         self.draw(reflectioGlobe)
 
 
+
+
+
+
+
+
+
+
 class Pyramid(Shape):
+    """ Class for the Pyramid Shape """
+
     def __init__(self, x, y, z,width, heigth):
         self.x = x
         self.y = y
@@ -687,23 +745,3 @@ class Pyramid(Shape):
         else:
             for tri in object:
                 tri.draw()
-class Matris():
-    def __init__(self, rows, cols, data=[]):
-        self.rows = rows
-        self.cols = cols
-        self._init_data(data)
-
-        if data:
-            data = (self.rows + self.cols) * [0]
-
-    def __getitem__(self, key):
-            i, j = key
-            self.__valor_invalido(i, j)
-            return self.data[(j - 1) + (i - 1) * self.cols]
-
-
-    def __setitem__(self, key, value):
-            i, j = key
-            self.__valor_invalido(i, j)
-            self.data[(j - 1) + (i - 1) * self.cols] = value
-
