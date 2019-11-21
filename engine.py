@@ -86,14 +86,14 @@ uranus  = Planet(0,0,0,RADIUS_MAP(URANUS_RADIUS ),10)
 neptune = Planet(0,0,0,RADIUS_MAP(NEPTUNE_RADIUS),10)
 
 
-mercury.revolution_generate(sun.x,sun.y,DISTANCE_MAP(MERCURY_DISTANCE)+sun.radius,VELOCITY_MAP(MERCURY_VELOCITY))
-venus.revolution_generate(sun.x,sun.y,DISTANCE_MAP(VENUS_DISTANCE)+sun.radius,VELOCITY_MAP(VENUS_VELOCITY))
-earth.revolution_generate(sun.x,sun.y,DISTANCE_MAP(EARTH_DISTANCE)+sun.radius,VELOCITY_MAP(EARTH_VELOCITY))
-mars.revolution_generate(sun.x,sun.y,DISTANCE_MAP(MARS_DISTANCE)+sun.radius,VELOCITY_MAP(MARS_VELOCITY))
-jupiter.revolution_generate(sun.x,sun.y,DISTANCE_MAP(JUPITER_DISTANCE)+sun.radius,VELOCITY_MAP(JUPITER_VELOCITY))
-saturn.revolution_generate(sun.x,sun.y,DISTANCE_MAP(SATURN_DISTANCE)+sun.radius,VELOCITY_MAP(SATURN_VELOCITY))
-uranus.revolution_generate(sun.x,sun.y,DISTANCE_MAP(URANUS_DISTANCE)+sun.radius,VELOCITY_MAP(URANUS_VELOCITY))
-neptune.revolution_generate(sun.x,sun.y,DISTANCE_MAP(NEPTUNE_DISTANCE)+sun.radius,VELOCITY_MAP(NEPTUNE_VELOCITY))
+mercury.revolution_generate(sun.x,sun.y,DISTANCE_MAP(MERCURY_DISTANCE)+sun.radius+mercury.radius,VELOCITY_MAP(MERCURY_VELOCITY))
+venus.revolution_generate(sun.x,sun.y,DISTANCE_MAP(VENUS_DISTANCE)+sun.radius+venus.radius,VELOCITY_MAP(VENUS_VELOCITY))
+earth.revolution_generate(sun.x,sun.y,DISTANCE_MAP(EARTH_DISTANCE)+sun.radius+earth.radius,VELOCITY_MAP(EARTH_VELOCITY))
+mars.revolution_generate(sun.x,sun.y,DISTANCE_MAP(MARS_DISTANCE)+sun.radius+mars.radius,VELOCITY_MAP(MARS_VELOCITY))
+jupiter.revolution_generate(sun.x,sun.y,DISTANCE_MAP(JUPITER_DISTANCE)+sun.radius+jupiter.radius,VELOCITY_MAP(JUPITER_VELOCITY))
+saturn.revolution_generate(sun.x,sun.y,DISTANCE_MAP(SATURN_DISTANCE)+sun.radius+saturn.radius,VELOCITY_MAP(SATURN_VELOCITY))
+uranus.revolution_generate(sun.x,sun.y,DISTANCE_MAP(URANUS_DISTANCE)+sun.radius+uranus.radius,VELOCITY_MAP(URANUS_VELOCITY))
+neptune.revolution_generate(sun.x,sun.y,DISTANCE_MAP(NEPTUNE_DISTANCE)+sun.radius+neptune.radius,VELOCITY_MAP(NEPTUNE_VELOCITY))
 
 
 if __name__ == "__main__":
@@ -124,5 +124,5 @@ if __name__ == "__main__":
         # triangulo.rotation(1,'y') #OK
 
 
-        ENGINE.flip_and_clock(100)
+        ENGINE.flip_and_clock(10)
 

@@ -54,4 +54,4 @@ def DISTANCE_MAP(distance):
     # return MAP(distance,0,PLUTO_DISTANCE,0,20)
 
 def VELOCITY_MAP(velocity):
-    return round(MAP(round(velocity*100),0,1000,1,100))
+    return round(MAP(round(velocity*100),0,1000,1,360))
