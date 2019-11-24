@@ -1,8 +1,9 @@
 from shapes import *
 
 # Everything is in km
-SUN_RADIUS     = 10
+# SUN_RADIUS     = 109
 
+SUN_RADIUS     = 9
 
 
 EARTH_RADIUS   = 1
@@ -34,6 +35,7 @@ NEPTUNE_DISTANCE  = 30.05
 MERCURY_VELOCITY= 0.241
 VENUS_VELOCITY= 0.615
 EARTH_VELOCITY=1
+MOON_VELOCITY=0.0748
 MARS_VELOCITY= 1.88
 JUPITER_VELOCITY=11.9
 SATURN_VELOCITY=29.4
@@ -46,12 +48,12 @@ NEPTUNE_VELOCITY=163.7
 # 5906376272
 # 9999999999
 def RADIUS_MAP(radius):
-    return radius/2
+    return (radius/2)
     # return MAP(radius,PLUTO_RADIUS,JUPITER_RADIUS,0,5)
 
 def DISTANCE_MAP(distance):
-    return distance*5
+    return distance*6
     # return MAP(distance,0,PLUTO_DISTANCE,0,20)
 
 def VELOCITY_MAP(velocity):
-    return round(MAP(round(velocity*60),0,1000,1,360))
+    return round(MAP(round(velocity*60),0,1000,1,360*5))
