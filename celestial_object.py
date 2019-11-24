@@ -5,26 +5,22 @@ import copy
 
 
 class CelestialObject():
-    def __init__(self,x,y,z,radius,gravity):
+    def __init__(self,x,y,z,radius):
         self.x = x
         self.y = y
         self.z = z
-        self.gravity = gravity
         self.radius = radius
-        self.total = 20
+        self.total = 10
         self.globe = Sphere(self.x,self.y,self.z,self.radius, self.total)
         self.more = dict()
 
-        self.all_globes=None
+        self.vertices_list = []
         self.number_revolution=0
         self.revolution_loop=0
 
-    def revolution_generate(self, x, y, radius, number=60):
+    def sun_revolution(self, x, y, radius, number=60):
         # cc = Circle(1,1,radius,number)
         # cc.draw()
-
-        vertices_list = list()
-
         hx = copy.copy(x)
         hy = copy.copy(y)
         angle = 2 * pi / number
@@ -32,28 +28,35 @@ class CelestialObject():
             # vertices_list.append(Vertex(hx, hy))
             x = hx + radius * cos(i * angle)
             y = hy + radius * sin(i * angle)
-            vertices_list.append(Vertex(x, y))
+            self.vertices_list.append(Vertex(x, y))
 
-        list_of_globes = list()
-        for vtx in vertices_list:
-            print(vtx)
-            # def __init__(self, x, y, z, radius, total):
-            gg = Sphere(vtx.x, vtx.y, vtx.z, self.radius, self.total)
-            list_of_globes.append(gg)
+        self.number_revolution = len(self.vertices_list)
 
-        self.number_revolution = len(list_of_globes)
-        self.all_globes = list_of_globes
+
+    def moon_revolution(self, list_of_points, radius ,number=60):
+        for i in range(len(list_of_points)):
+            hx = copy.copy(list_of_points[i].x)
+            hy = copy.copy(list_of_points[i].y)
+            angle = 2 * pi / number
+            x = hx + radius * cos(i * angle)
+            y = hy + radius * sin(i * angle)
+            self.vertices_list.append(Vertex(x, y))
+
+        self.number_revolution = len(self.vertices_list)
+
+
 
     def revolution_animate(self):
-        print(self.revolution_loop)
         if self.revolution_loop == self.number_revolution:
             self.revolution_loop = 0
-        print(self.revolution_loop)
-        print(self.number_revolution)
-        print(self.all_globes[self.revolution_loop])
-        self.all_globes[self.revolution_loop].draw()
+        x = self.vertices_list[self.revolution_loop].x
+        y = self.vertices_list[self.revolution_loop].y
+        z = self.vertices_list[self.revolution_loop].z
 
+        Sphere(x,y,z ,self.radius, self.total).draw()
         self.revolution_loop += 1
+
+        print(self.revolution_loop , self.number_revolution)
 
     def rotation(self):
         pass
