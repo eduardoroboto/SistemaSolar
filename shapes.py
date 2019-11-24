@@ -77,16 +77,12 @@ class Vertex():
         self.z = z
 
 
-    def translation(self,dx,dy,dz=None):
+    def translation(self,dx,dy,dz=0):
         """A Function that makes the translation of the Vertex"""
         vertexMatrix = self.__to_matrix(1)
 
-        if dz is not None:
-            translationMatrix = Matrix(4, 4, [1, 0, 0, dx, 0, 1, 0, dy, 0, 0, 1, dz, 0, 0, 0, 1])
-            result = translationMatrix.dot(vertexMatrix)
-        else:
-            translationMatrix = Matrix(4, 4, [1, 0, 0, dx, 0, 1, 0, dy, 0, 0, 1, 0, 0, 0, 0, 1])
-            result = translationMatrix.dot(vertexMatrix)
+        translationMatrix = Matrix(4, 4, [1, 0, 0, dx, 0, 1, 0, dy, 0, 0, 1, dz, 0, 0, 0, 1])
+        result = translationMatrix.dot(vertexMatrix)
 
         return self.__from_matrix(result)
 
@@ -94,24 +90,37 @@ class Vertex():
     def rotation(self,angle,axis='z'):
         """A Function that makes the rotation of the Vertex based on angle and axis"""
 
-        angle = radians(angle)
+        #angle = radians(angle)
         vertexMatrix = self.__to_matrix(3)
-        matrixRotation3dX = Matrix(3,3,[1,0,0,0,cos(angle),-sin(angle),0,sin(angle),cos(angle)])
-        matrixRotation3dY = Matrix(3,3,[cos(angle),0,sin(angle),0,1,0,-sin(angle),0,cos(angle)])
-        matrixRotation3dZ = Matrix(3,3,[cos(angle),-sin(angle),0,sin(angle),cos(angle),0,0,0,1])
 
-        if axis == 'z':
-            result = matrixRotation3dZ.dot(vertexMatrix)
-            ok = result.return_list_cols(1)
-            self.update(ok[0], ok[1], ok[2])
-        elif axis == 'x':
-            result = matrixRotation3dX.dot(vertexMatrix)
-            ok = result.return_list_cols(1)
-            self.update(ok[0], ok[1], ok[2])
-        elif axis == 'y':
-            result = matrixRotation3dY.dot(vertexMatrix)
-            ok = result.return_list_cols(1)
-            self.update(ok[0], ok[1], ok[2])
+        a = 1 if axis == 'x' else 0
+        b = 1 if axis == 'y' else 0
+        c = 1 if axis == 'z' else 0
+
+
+        OneMinusCosAngle = 1-cos(angle)
+
+        x11 = ( cos(angle) + ( OneMinusCosAngle * (a**2) ) )
+        x12 = ( OneMinusCosAngle * a * b + sin(angle) * c )
+        x13 = ( OneMinusCosAngle * a * c - sin(angle) * b )
+        x21 = ( OneMinusCosAngle * b * a - sin(angle) * c )
+        x22 = ( cos(angle) + OneMinusCosAngle * ( b**2 ) )
+        x23 = ( OneMinusCosAngle * b * c + sin(angle) * a )
+        x31 = ( OneMinusCosAngle * c * a + sin(angle) * b )
+        x32 = ( OneMinusCosAngle * c * b - sin(angle) * a )
+        x33 = ( cos(angle) + OneMinusCosAngle* (c**2) )
+
+        matrixRotation = Matrix(3,3,[x11,x12,x13,x21,x22,x23,x31,x32,x33])
+
+        result = matrixRotation.dot(vertexMatrix)
+        ok = result.return_list_cols(1)
+        self.update(ok[0], ok[1], ok[2])
+
+        # if len(xyz)==3:
+        #     result = matrixRotation3dZ.dot(vertexMatrix)
+        #     result = result.dot(vectorUnity)
+        #     ok = result.return_list_cols(1)
+        #     self.update(ok[0], ok[1], ok[2])
 
 
 
@@ -176,7 +185,7 @@ class Shape():
      """
 
 
-    def translation(self, dx, dy, dz=None):
+    def translation(self, dx, dy, dz=0):
         for vertex in self.vertices:
             vertex.translation(dx,dy,dz)
 
@@ -198,7 +207,6 @@ class Shape():
                 reflection_vertices.append(Vertex(numbers[0],numbers[1],numbers[2]))
 
         self.draw(reflection_vertices)
-
 
     def projection(self):
         # TODO Fazer essa função projection no futuro para ficar legal no github.
