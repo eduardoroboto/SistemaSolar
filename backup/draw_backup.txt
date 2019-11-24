@@ -8,6 +8,8 @@
     #     hy = copy.copy(y)
     #     angle = 2 * pi / number
     #     for i in range(0, number):
+    #         # vertices_list.append(Vertex(hx, hy))
+    #         x = hx + radius * cos(i * angle)
     #         y = hy + radius * sin(i * angle)
     #         vertices_list.append(Vertex(x, y))
     #
