@@ -9,7 +9,8 @@ from shapes import *
 
 class Engine():
     def __init__(self,zoom,display):
-        self.zoom_factor = -200
+        self.zoom_factor = -400
+        self.new_x = 0
         self.display = (700, 700)
 
 
@@ -35,10 +36,22 @@ class Engine():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         self.zoom_factor=+5
-                        glTranslate(0.0, 0.0,  self.zoom_factor)
+                        glTranslate(0.0, 0.0,self.zoom_factor)
                     if event.key == pygame.K_DOWN:
                         self.zoom_factor=-5
-                        glTranslate(0.0, 0.0, self.zoom_factor)
+                        glTranslate(0.0, 0.0,self.zoom_factor)
+                    if event.key == pygame.K_RIGHT:
+                        self.new_x=-5
+                        glTranslate(self.new_x,0 , 0.0)
+                    if event.key == pygame.K_LEFT:
+                        self.new_x=+5
+                        glTranslate(self.new_x, 0, 0.0)
+                    if event.key == pygame.K_w:
+                        self.new_x = -5
+                        glRotate(self.new_x * 0.5, 0.0, 1.0, 0.0)
+                    if event.key == pygame.K_s:
+                        self.new_x = +5
+                        glRotate(self.new_x * 0.5, 1.0, 0.0, 0.0)
 
 
     def clear_buffer(self):
