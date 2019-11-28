@@ -617,13 +617,14 @@ class Cuboid(Shape):
 class Sphere(Shape):
     """ Class for the Sphere Shape """
 
-    def __init__(self,x,y,z,radius,total):
+    def __init__(self,x,y,z,radius,total,color=(0, 1,0.3)):
         self.x = x
         self.y = y
         self.z = z
         self.radius = radius
         self.total = total
         self.halfPI = pi / 2
+        self.color = color
 
         self.vertices = self.__creat_vertices(self.x,self.y,self.z)
 
@@ -649,7 +650,7 @@ class Sphere(Shape):
     def draw(self,object=None):
         if object is None:
             glBegin(GL_TRIANGLE_STRIP)
-            glColor4fv((0, 0, 1,0.3))
+            glColor3fv(self.color)
             for i in range(self.total+1):
                 for j in range(self.total+1):
                     glVertex3fv(self.vertices[i,j].get_point())
@@ -658,7 +659,7 @@ class Sphere(Shape):
             glEnd()
         else:
             glBegin(GL_TRIANGLE_STRIP)
-            glColor4fv((0, 0, 1, 0.3))
+            glColor3fv(self.color)
             for i in range(self.total):
                 for j in range(self.total + 1):
                     glVertex3fv(object[i, j].get_point())
