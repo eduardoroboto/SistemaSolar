@@ -1,0 +1,22 @@
+    """A Class used to create and animate Celestial Objects using the object Sphere from shapes file"""
+
+
+  """Parameters
+               ----------
+               radius : int
+                   Position on x axis
+               color : int
+                   Position on y axis
+               ----------
+            Helper Variables
+                orbit_list : int
+                    Total of verticies of the Orbit.
+                __total : int
+                    Total of Polygons for the Sphere shapes.
+               __mode : String
+                    3D or 2D vizualization.
+               __number_revolution : int
+                    Size of orbit_list
+               __revolution_loop : int
+                    Position on orbit list for animation
+               """
